@@ -1,2 +1,2 @@
 # Monitoring
-Système d'observabilité des services et d'infrastructure avec Graffana, prometheus et node-exporter
+Système d'observabilité des services et d'infrastructure avec Graffana, prometheus, node-exporter et  opentelemetry
