@@ -5,7 +5,7 @@ Système d'observabilité des services et d'infrastructure avec Grafana, prometh
 
 Observabilité = logs + métriques
 
-# 1 Installation de Node exporter
+# 1. Installation de Node exporter
 
 Node Exporter est un agent à installer sur l’ensemble des machines à superviser, 
 il permet de collecter périodiquement les métriques systèmes : Cpu, Ram, espace disque … 
@@ -74,8 +74,19 @@ journalctl -u node_exporter.service -f
 ```
 <img width="1087" height="379" alt="image" src="https://github.com/user-attachments/assets/60cf378f-4e5b-461f-bb44-1f59f357ea5c" />
 
+# 2. Installation de Prometheus
+Prmotheus est générateur d'alerte, une base de données de séries temporelles qui enregistre des métriques en temps réel, avec une capacité d'acquisition élevée.
+Ces métriques peuvent ensuite être interrogé à l'aide d'un langage de requête simple (PromQL) et peuvent également servir à générer des alertes   
+
+## 2.1 Récuperation et extraction du binaire
+
+```
+ wget https://github.com/prometheus/prometheus/releases/download/v3.5.1/prometheus-3.5.1.linux-amd64.tar.gz
+```
 
 
+
+  - https://prometheus.io/docs/guides/node-exporter/
   - https://github.com/Bhoopesh123/OpenTelemetry/blob/main/README.md
  
   - https://github.com/Bhoopesh123/OpenTelemetry/blob/main/README_OpenTelemetry_Metrics.md
