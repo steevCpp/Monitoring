@@ -76,6 +76,7 @@ journalctl -u node_exporter.service -f
 
 # 2. Installation de Prometheus
 Prmotheus est générateur d'alerte, une base de données de séries temporelles qui enregistre des métriques en temps réel, avec une capacité d'acquisition élevée.
+Il collecte des métriques à partir de cibles configurées via une approche de "pull" HTTP. Son architecture est basée sur une base de données temporelle (TSDB) qui stocke les données avec une grande efficacité.
 Ces métriques peuvent ensuite être interrogé à l'aide d'un langage de requête simple (PromQL) et peuvent également servir à générer des alertes   
 une url du type http://:9090
 
@@ -160,7 +161,8 @@ sudo systemctl daemon-reload
 ```
 <img width="992" height="406" alt="image" src="https://github.com/user-attachments/assets/8aa6ccc2-7196-4e63-bbd4-c7d9fe46663c" />
 
-
+### Configuration de prometheus pour prendre en considération Node exporter
+On rajoute l'url `localhost:9100` de node exporter dans `targets` du bloc `static_configs` et on rédemarre le service prometheus.service
 
 
   - https://prometheus.io/docs/guides/node-exporter/
