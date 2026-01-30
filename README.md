@@ -10,6 +10,8 @@ Observabilité = logs + métriques
 Node Exporter est un agent à installer sur l’ensemble des machines à superviser, 
 il permet de collecter périodiquement les métriques systèmes : Cpu, Ram, espace disque … 
 Après installation ces métriques seront accessibles via une url du type http://:9100
+Nos exporter collecte par default(CPU, RAM, DISQUE/FS).
+
 ## 1.1 Récuperation et extraction du binaire
 ```
 wget https://github.com/prometheus/node_exporter/releases/download/v1.10.2/node_exporter-1.10.2.linux-amd64.tar.gz
@@ -35,6 +37,9 @@ Création d'un service node-exporter
 ```
 sudo vim /lib/systemd/system/node_exporter.service
 ```
+
+Les metrics que l'on veut collecter sont: mountstats, logind, processes, ntp, systemd, tcpstat, wifi
+
 ```
 [Unit]
 Description=Node Exporter
@@ -161,10 +166,31 @@ sudo systemctl daemon-reload
 ```
 <img width="992" height="406" alt="image" src="https://github.com/user-attachments/assets/8aa6ccc2-7196-4e63-bbd4-c7d9fe46663c" />
 
-### Configuration de prometheus pour prendre en considération Node exporter
-On rajoute l'url `localhost:9100` de node exporter dans `targets` du bloc `static_configs` et on rédemarre le service prometheus.service
+### Configuration de prometheus 
+Toute la configuration de Prometheus est dans le fichier /etc/prometheus/prometheus.yml. 
+
+#### Authentification
+
+<img width="369" height="154" alt="image" src="https://github.com/user-attachments/assets/3adf74ec-ee7d-4adf-a96e-c2598db31664" />
 
 
+#### prendre en considération Node exporter
+
+On rajoute le blocs suivant, en fin du fichier:
+
+<img width="548" height="196" alt="image" src="https://github.com/user-attachments/assets/d3bfcbaa-c74e-47be-bc7f-a5f0531bbea1" />
+
+On redemarre le service prometheus après modification.
+
+```
+sudo systemctl status prometheus
+```
+On peut voir apparaître nos modification sur le site prometheus, dans mon cas (http://localhost:9090/targets).
+<img width="1348" height="442" alt="image" src="https://github.com/user-attachments/assets/b854803d-1e94-40d3-85a8-1ddba8f03f10" />
+
+
+
+  - https://grafana.com/grafana/dashboards/1860-node-exporter-full/
   - https://prometheus.io/docs/guides/node-exporter/
   - https://github.com/Bhoopesh123/OpenTelemetry/blob/main/README.md
   - https://github.com/Bhoopesh123/OpenTelemetry/blob/main/README_OpenTelemetry_Metrics.md
