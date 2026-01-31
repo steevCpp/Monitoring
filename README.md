@@ -170,8 +170,38 @@ sudo systemctl daemon-reload
 Toute la configuration de Prometheus est dans le fichier /etc/prometheus/prometheus.yml. 
 
 #### Authentification
+On sécurise l'accès à prometheus en mettant exigeant l'authentification pour les admins et pour les api.
+On créé le fichier le web.yml, et on ajoute les informations **d'authentification d'api**, comme suite:
+```
+sudo vim /etc/prometheus/web.yml
+```
+On peut utilise le https://bcrypt-generator.com/ pour hasher le mot de passe.
+```
+basic_auth_users:
+    admin: $2a$10$tMbmLWpgrFVDPXRBD7JlqOD/5.gIdWlZiBweoTtd5lVxa3ZMZrdcG
+```
+On vérifie la synthaxe du fichier web.yml
 
-<img width="369" height="154" alt="image" src="https://github.com/user-attachments/assets/3adf74ec-ee7d-4adf-a96e-c2598db31664" />
+<img width="706" height="49" alt="image" src="https://github.com/user-attachments/assets/822ec031-dc28-4e32-9bb3-a03d82e17078" />
+
+On rajoute l'option `--web.config.file=/etc/prometheus/web.yml` dans le fichier service prometheus.service
+
+```
+sudo vim /etc/systemd/system/multi-user.target.wants/prometheus.service
+```
+<img width="480" height="163" alt="image" src="https://github.com/user-attachments/assets/45abe9bf-623a-4f81-b73b-d62f8c373120" />
+
+```
+sudo systemctl daemon-reload
+```
+
+```
+sudo systemctl restart prometheus
+```
+<img width="1213" height="485" alt="image" src="https://github.com/user-attachments/assets/936a760e-67fa-426c-99dc-ac03d6cefa32" />
+
+
+On configure **l'authentification admin** prometheus pour ressoudre l'erreur 401
 
 
 #### prendre en considération Node exporter
