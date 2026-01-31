@@ -98,7 +98,7 @@ tar xvzf prometheus-3.5.1.linux-amd64.tar.gz
 - prometheus : Binaire exécutable
 - promtool : Outils de vérification de syntaxe, de configuration
 
-## 2.2 Création d'un service prometheus
+## 2.2.1 Création d'un service prometheus
 
 L'utilisateur service prometheus 
 ```
@@ -166,10 +166,10 @@ sudo systemctl daemon-reload
 ```
 <img width="992" height="406" alt="image" src="https://github.com/user-attachments/assets/8aa6ccc2-7196-4e63-bbd4-c7d9fe46663c" />
 
-### Configuration de prometheus 
+## 2.2.2 Configuration de prometheus 
 Toute la configuration de Prometheus est dans le fichier /etc/prometheus/prometheus.yml. 
 
-#### Authentification
+## 2.2.2.1 Authentification
 On sécurise l'accès à prometheus en mettant exigeant l'authentification pour les admins et pour les api.
 On créé le fichier le web.yml, et on ajoute les informations **d'authentification d'api**, comme suite:
 ```
@@ -204,8 +204,6 @@ sudo systemctl restart prometheus
 On configure **l'authentification admin** prometheus pour ressoudre l'erreur 401
 
 
-#### prendre en considération Node exporter
-
 On rajoute le blocs suivant, en fin du fichier:
 
 <img width="548" height="196" alt="image" src="https://github.com/user-attachments/assets/d3bfcbaa-c74e-47be-bc7f-a5f0531bbea1" />
@@ -213,7 +211,7 @@ On rajoute le blocs suivant, en fin du fichier:
 On redemarre le service prometheus après modification.
 
 ```
-sudo systemctl status prometheus
+sudo systemctl start prometheus
 ```
 On peut voir apparaître nos modification sur le site prometheus, dans mon cas (http://localhost:9090/targets).
 <img width="1348" height="442" alt="image" src="https://github.com/user-attachments/assets/b854803d-1e94-40d3-85a8-1ddba8f03f10" />
