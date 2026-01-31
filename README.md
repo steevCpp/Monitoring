@@ -80,8 +80,8 @@ journalctl -u node_exporter.service -f
 <img width="1087" height="379" alt="image" src="https://github.com/user-attachments/assets/60cf378f-4e5b-461f-bb44-1f59f357ea5c" />
 
 # 2. Installation de Prometheus
+Prometheus récupère/collecte (pull http) les metrics sur les serveurs cibles où sont installés node-exporter. Il stockes les données temporelle (TSDB) qui stocke les données avec une grande efficacité.
 Prmotheus est générateur d'alerte, une base de données de séries temporelles qui enregistre des métriques en temps réel, avec une capacité d'acquisition élevée.
-Il collecte des métriques à partir de cibles configurées via une approche de "pull" HTTP. Son architecture est basée sur une base de données temporelle (TSDB) qui stocke les données avec une grande efficacité.
 Ces métriques peuvent ensuite être interrogé à l'aide d'un langage de requête simple (PromQL) et peuvent également servir à générer des alertes   
 une url du type http://:9090
 
@@ -174,7 +174,7 @@ On sécurise l'accès à prometheus en mettant exigeant l'authentification pour 
 On créé le fichier le web.yml, et on ajoute les informations **d'authentification d'api**, comme suite:
 ```
 sudo vim /etc/prometheus/web.yml
-```
+``` 
 On peut utilise le https://bcrypt-generator.com/ pour hasher le mot de passe.
 ```
 basic_auth_users:
@@ -216,9 +216,12 @@ sudo systemctl start prometheus
 On peut voir apparaître nos modification sur le site prometheus, dans mon cas (http://localhost:9090/targets).
 <img width="1348" height="442" alt="image" src="https://github.com/user-attachments/assets/b854803d-1e94-40d3-85a8-1ddba8f03f10" />
 
+## 2.2.2.1 Configuration des alertes
+
 
 
   - https://grafana.com/grafana/dashboards/1860-node-exporter-full/
   - https://prometheus.io/docs/guides/node-exporter/
   - https://github.com/Bhoopesh123/OpenTelemetry/blob/main/README.md
   - https://github.com/Bhoopesh123/OpenTelemetry/blob/main/README_OpenTelemetry_Metrics.md
+  - https://www.jjworld.fr/prometheus-grafana-superviser-vos-serveurs/
