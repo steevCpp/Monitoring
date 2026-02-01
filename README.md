@@ -218,10 +218,61 @@ On peut voir apparaître nos modification sur le site prometheus, dans mon cas (
 
 ## 2.2.2.1 Configuration des alertes
 
+# 3. [Installation de Grafana](https://grafana.com/grafana/download?platform=linux)
+Grafana est un éditeur de graphiques gratuit et open source riche en fonctionnalités et un tableau de bord de métriques pour diverses sources de données telles que, Graphite, OpenTSDB, Prometheus et InfluxDB.
+
+Le port d'écoute de grafana par default est le 3000, le nom d'utilisateur par default d'administrateur est `admin` et le mot de passe `admin`.
+
+## 3.1 
+
+```
+sudo apt-get install -y adduser libfontconfig1 musl
+wget https://dl.grafana.com/grafana-enterprise/release/12.3.2/grafana-enterprise_12.3.2_21390657659_linux_amd64.deb
+sudo dpkg -i grafana-enterprise_12.3.2_21390657659_linux_amd64.deb
+```
+
+```
+sudo systemctl daemon-reload
+```
+
+```
+sudo systemctl start grafana-server
+```
+
+<img width="1091" height="334" alt="image" src="https://github.com/user-attachments/assets/ab2be52c-0f32-44df-8012-ba0a3af1f38b" />
+
+## 3.2 Configuration de grafana
+Le fichier principal de configuration se trouve dans `/etc/grafana/grafana.ini`,
+les journaux dans le répertoire `/var/log/grafana` et sa base de données SQLite se trouve dans l’emplacement `/var/lib/grafana/grafana.db`.
+
+## 3.3 Création d'une data source
+L'ajout d'une nouvelle dans la section http://localhost:3000/connections/datasources.
+On ajoute prometheus comme data source et renseigne les informations de serveur prometheus, comme suivant.
+
+<img width="550" height="526" alt="image" src="https://github.com/user-attachments/assets/9737997e-2ce7-4cff-9e82-9b7c78943c21" />
+
+Ensuite on clique sur `save & test`
+<img width="877" height="194" alt="image" src="https://github.com/user-attachments/assets/732da3b8-0814-443e-91ea-5d5cd4e0a8ee" />
+
+## 3.3 Création d'un dashboard
+
+Dans la section http://localhost:3000/dashboards 
+
+On peut [télécharger des dashboard](https://grafana.com/grafana/dashboards/?dataSource=prometheus%2Cnobl9agent%2Cvictorialogs-datasource%2Ccamptocamp-prometheus-alertmanager-datasource) déjà fait et importer. 
+
+Les metrics que l'on va visualiser: memoire, cpu, fs, mountstats, logind, processes, ntp, systemd, tcpstat, wifi.
+
+- Memoire utilisée en %: (node_memory_Active_bytes / node_memory_MemTotal_bytes)*100 
+<img width="1222" height="547" alt="image" src="https://github.com/user-attachments/assets/595bd28d-b2a6-4535-b20a-d79be73fe064" />
+
+- Utilisation % CPU : 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+<img width="1223" height="547" alt="image" src="https://github.com/user-attachments/assets/f8455536-a7ac-43d6-861d-b5f30c23bbae" />
 
 
+
+# Plus d'informations
   - https://grafana.com/grafana/dashboards/1860-node-exporter-full/
   - https://prometheus.io/docs/guides/node-exporter/
   - https://github.com/Bhoopesh123/OpenTelemetry/blob/main/README.md
-  - https://github.com/Bhoopesh123/OpenTelemetry/blob/main/README_OpenTelemetry_Metrics.md
+  - https://blog.stephane-robert.info/docs/observer/metriques/prometheus/
   - https://www.jjworld.fr/prometheus-grafana-superviser-vos-serveurs/
